@@ -34,7 +34,7 @@ jobs:
         python pylint_counts.py * > now.json
         python pylint_counts.py _default_branch/* > then.json
         python build_report.py then.json now.json > report.md
-        REPORT="${cat report.md}"
+        REPORT="$(cat report.md)"
         echo "::set-output name=report::$REPORT"
     # make the comment
     - uses: marocchino/sticky-pull-request-comment@v2
