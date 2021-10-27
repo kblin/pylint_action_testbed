@@ -40,10 +40,11 @@ jobs:
     - name: test output
       run: echo ${{ steps.report.outputs.comment }}
     # make the comment
-    - uses: marocchino/sticky-pull-request-comment@v2
+    - name: Comment
+      uses: marocchino/sticky-pull-request-comment@v2
       with:
         hide_and_recreate: true
         hide_classify: "OUTDATED"
         message: |
-          Using ${{ github.sha }}:
           ${{ steps.report.outputs.comment }}
+          using merge commit ${{ github.sha }}
