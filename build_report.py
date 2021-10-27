@@ -16,6 +16,6 @@ for key, val in default.items():
 print("### Issue count changes")
 if result:
     for key, val in sorted(result.items()):
-        print("- *%s*: %s" % key, val)
+        print("- **%s**: %s" % (key, val))
 else:
     print("None")
