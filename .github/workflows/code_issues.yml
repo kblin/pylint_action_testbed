@@ -12,6 +12,11 @@ jobs:
         python-version: '3.x'
     # checkout the PR
     - uses: actions/checkout@v2
+    # cache the pip step for speed
+    - uses: actions/cache@v2
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
     # install the dependencies
     - name: Install dependencies
       run: |
