@@ -30,14 +30,13 @@ jobs:
     # get counts of issues
     # build the report
     - name: Build report
+      id: report
       run: |
         python pylint_counts.py * > now.json
         python pylint_counts.py _default_branch/* > then.json
         python build_report.py then.json now.json > report.md
-        cat report.md
-        REPORT="$(cat report.md)"
         echo report: $REPORT
-        echo "::set-output name=report::$REPORT"
+        echo "::set-output name=comment::$REPORT"
     # make the comment
     - uses: marocchino/sticky-pull-request-comment@v2
       with:
@@ -45,6 +44,4 @@ jobs:
         hide_classify: "OUTDATED"
         message: |
           Using ${{ github.sha }}:
-          ```
-          ${{ steps.lint.outputs.report }}
-          ```
+          ${{ steps.report.outputs.comment }}
