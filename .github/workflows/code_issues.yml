@@ -27,6 +27,7 @@ jobs:
     - name: PR issues
       id: pr
       run: |
+        git rev-parse --short HEAD
         COUNTS=$(python pylint_counts.py dummy)
         echo "::set-output name=counts::$COUNTS"
     # checkout the default branch
@@ -37,6 +38,7 @@ jobs:
     - name: default branch issues
       id: default
       run: |
+        git rev-parse --short HEAD
         COUNTS=$(python pylint_counts.py dummy)
         echo "::set-output name=counts::$COUNTS"
     # build the report
