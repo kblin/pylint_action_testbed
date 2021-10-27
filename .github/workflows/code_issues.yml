@@ -12,6 +12,11 @@ jobs:
         python-version: '3.x'
     # checkout the PR
     - uses: actions/checkout@v2
+    # checkout the default branch
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.repository.default_branch }}
+        path: _default_branch
     # cache the pip step for speed
     - uses: actions/cache@v2
       with:
@@ -26,9 +31,8 @@ jobs:
     # build the report
     - name: Build report
       run: |
-        python pylint_counts.py dummy > now.json
-        git checkout ${{ github.event.repository.default_branch }}
-        python pylint_counts.py dummy > then.json
+        python pylint_counts.py * > now.json
+        python pylint_counts.py _default_branch/* > then.json
         python build_report.py then.json now.json > report.md
         REPORT="${cat report.md}"
         echo "::set-output name=report::$REPORT"
