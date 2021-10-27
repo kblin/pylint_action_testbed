@@ -13,14 +13,11 @@ pylint_params = ["-j", "12",]
 output = StringIO()
 reporter = TextReporter(output=output)
 result = Run(pylint_params + paths_to_check, reporter=reporter, do_exit=False, exit=False)
-if result.linter.stats["fatal"]:
-    print("contains syntax errors")
-    sys.exit(1)
-
 simple = {
     "Errors": result.linter.stats["error"],
     "Convention": result.linter.stats["convention"],
     "Refactor": result.linter.stats["refactor"],
     "Warnings": result.linter.stats["warning"],
+    "Syntax/Fatal errors": result.linter.stats["fatal"],
 }
 print(json.dumps(simple, indent=1))
