@@ -37,6 +37,7 @@ jobs:
         python build_report.py then.json now.json > report.md
         REPORT=$(cat report.md)
         echo report: $REPORT
+        REPORT="${REPORT//$'\n'/'%0A'}"
         echo "::set-output name=comment::$REPORT"
     - name: test output
       run: echo ${{ steps.report.outputs.comment }}
