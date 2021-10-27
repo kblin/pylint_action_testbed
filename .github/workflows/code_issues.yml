@@ -43,8 +43,8 @@ jobs:
     - name: Build report
       id: report
       run: |
-        echo ${{ steps.pr.outputs.counts }} > now.json
-        echo ${{ steps.default.outputs.counts }} > then.json
+        echo '${{ steps.pr.outputs.counts }}' > now.json
+        echo '${{ steps.default.outputs.counts }}' > then.json
         python build_report.py then.json now.json > report.md
         REPORT=$(cat report.md)
         echo report: $REPORT
