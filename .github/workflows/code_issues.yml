@@ -60,4 +60,4 @@ jobs:
         hide_classify: "OUTDATED"
         message: |
           ${{ steps.report.outputs.comment }}
-          using merge commit ${{ github.sha }}
+          using merge commit ${{ github.sha }} from ${{ github.event.pull_request.head.sha }}
