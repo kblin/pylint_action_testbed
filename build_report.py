@@ -3,8 +3,8 @@
 import json
 import sys
 
-default = json.load(sys.argv[1])
-pull = json.load(sys.argv[2])
+default = json.load(open(sys.argv[1]))
+pull = json.load(open(sys.argv[2]))
 
 result = {}
 for key, val in default.items():
