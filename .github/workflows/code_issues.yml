@@ -37,6 +37,8 @@ jobs:
         python build_report.py then.json now.json > report.md
         echo report: $REPORT
         echo "::set-output name=comment::$REPORT"
+    - name: test output
+      run: echo ${{ steps.report.outputs.comment }}
     # make the comment
     - uses: marocchino/sticky-pull-request-comment@v2
       with:
