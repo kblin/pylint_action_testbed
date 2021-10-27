@@ -1,0 +1,53 @@
+name: Run tests
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    # install python
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    # checkout the PR
+    - uses: actions/checkout@v2
+    # install the dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Get pylint counts
+      run: |
+        python pylint_counts.py dummy > master.json
+    # get counts of issues in PR
+    - name: Get pylint counts
+      run: |
+        COUNTS="${python pylint_counts.py dummy}"
+        echo "::set-output counts=prcounts::$COUNTS"
+    # checkout default branch
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.repository.default_branch }}
+    # get counts of issues in default branch
+    - name: Get pylint counts
+      run: |
+        COUNTS="${python pylint_counts.py dummy}"
+        echo "::set-output counts=startcounts::$COUNTS"
+    # build the report
+    - name: Build report
+      run: |
+        echo ${{ steps.lint.outputs.startcounts }} > then.json
+        echo ${{ steps.lint.outputs.prcounts }} > now.json
+        REPORT="${python build_report.py then.json now.json}"
+        echo "::set-output name=report::$REPORT"
+    # make the comment
+    - uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        hide_and_recreate: true
+        hide_classify: "OUTDATED"
+        message: |
+          Using ${{ github.sha }}:
+          ```
+          ${{ steps.lint.outputs.report }}
+          ```
