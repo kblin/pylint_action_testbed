@@ -20,4 +20,4 @@ simple = {
     "Warnings": result.linter.stats["warning"],
     "Syntax/Fatal errors": result.linter.stats["fatal"],
 }
-print(json.dumps(simple, indent=1))
+print(json.dumps(simple))
