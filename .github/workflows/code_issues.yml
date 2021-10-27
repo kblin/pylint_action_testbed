@@ -35,6 +35,7 @@ jobs:
         python pylint_counts.py * > now.json
         python pylint_counts.py _default_branch/* > then.json
         python build_report.py then.json now.json > report.md
+        REPORT=$(cat report.md)
         echo report: $REPORT
         echo "::set-output name=comment::$REPORT"
     - name: test output
