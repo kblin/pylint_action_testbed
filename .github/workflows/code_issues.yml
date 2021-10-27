@@ -39,8 +39,6 @@ jobs:
         echo report: $REPORT
         REPORT="${REPORT//$'\n'/'%0A'}"
         echo "::set-output name=comment::$REPORT"
-    - name: test output
-      run: echo ${{ steps.report.outputs.comment }}
     # make the comment
     - name: Comment
       uses: marocchino/sticky-pull-request-comment@v2
