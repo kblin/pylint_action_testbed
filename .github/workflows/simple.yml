@@ -1,0 +1,30 @@
+name: Comment on pylint issue comparison
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    # install python
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    # checkout the PR
+    - uses: actions/checkout@v2
+
+    # cache the pip step for speed
+    - uses: actions/cache@v2
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+    # install the dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    # make the report
+    - uses: SJShaw/pylint-compare@cb7a28164997a7ebda17c3e1138a71a2fc1b2c45
+      with:
+        targets: dummy
+        install_pylint: false
