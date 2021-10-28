@@ -26,5 +26,5 @@ jobs:
     # make the report
     - uses: SJShaw/pylint-compare@main
       with:
-        targets: dummy
+        targets: dummy *.py
         install_pylint: false
