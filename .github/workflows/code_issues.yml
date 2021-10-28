@@ -57,4 +57,5 @@ jobs:
       with:
         message: |
           ${{ steps.report.outputs.comment }}
+
           using merge commit ${{ github.sha }} from ${{ github.event.pull_request.head.sha }}
